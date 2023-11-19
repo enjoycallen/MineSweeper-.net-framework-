@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MineSweeper.Dialogs;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -7,26 +8,51 @@ namespace MineSweeper
 {
     public partial class MainForm : Form
     {
-        private int row, col, mine;
-        private Plane plane;
+        public int row, col, mine;
+        public Plane plane;
 
         public MainForm()
         {
             InitializeComponent();
         }
 
-        public void 新游戏NToolStripMenuItem_Click(object sender, EventArgs e)
+        public void NewGame()
         {
-            if (plane != null)
+            if(plane != null)
             {
                 plane.Dispose();
             }
-            Console.WriteLine(row + "," + col + "," + mine);
             plane = new Plane(row, col, mine);
-            Size = plane.Size + new Size(100, 140);
+            Size = plane.Size + new Size(100, 100);
             plane.Name = "plane1";
             plane.Location = new Point(40, 50);
             Controls.Add(plane);
+        }
+
+        public void win()
+        {
+            using (var windialog = new WinDialog(plane.time))
+            {
+                windialog.ShowDialog();
+            }
+            NewGame();
+        }
+
+        public void lose()
+        {
+            using (var losedialog = new LoseDialog(plane.time))
+            {
+                if (losedialog.ShowDialog() == DialogResult.Cancel)
+                {
+                    Close();
+                }
+            }
+            NewGame();
+        }
+
+        public void 新游戏NToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewGame();
         }
 
         private void 退出XToolStripMenuItem_Click(object sender, EventArgs e)
@@ -36,7 +62,7 @@ namespace MineSweeper
 
         private void 查看帮助ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Process.Start("explorer.exe", "https://zhuanlan.zhihu.com/p/633777736");
+            Process.Start("explorer.exe", Properties.Resources.HelpPage);
         }
 
         private void 关于AToolStripMenuItem_Click(object sender, EventArgs e)
@@ -44,6 +70,14 @@ namespace MineSweeper
             using (var about = new AboutDialog())
             {
                 about.ShowDialog();
+            }
+        }
+
+        private void 统计信息ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var statistics = new StatisticsDialog())
+            {
+                statistics.ShowDialog();
             }
         }
 

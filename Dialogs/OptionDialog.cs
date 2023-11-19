@@ -25,6 +25,7 @@ namespace MineSweeper
         {
             mode = GameMode.UserDefined;
             height_textBox.Enabled = width_textBox.Enabled = mine_textBox.Enabled = user_defined_radioButton.Checked;
+            
         }
 
         public void cancel_button_Click(object sender, EventArgs e)

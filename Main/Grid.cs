@@ -177,11 +177,13 @@ namespace MineSweeper
             {
                 Image = marked_mouseover;
                 state = State.Marked;
+                ((Plane)Parent).mine_status_update(-1);
             }
             else if (state == State.Marked)
             {
                 Image = question_mark_mouseover;
                 state = State.Undetermined;
+                ((Plane)Parent).mine_status_update(1);
             }
             else if (state == State.Undetermined)
             {

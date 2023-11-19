@@ -141,6 +141,15 @@ namespace MineSweeper.Properties {
         }
         
         /// <summary>
+        ///   查找类似 data.dat 的本地化字符串。
+        /// </summary>
+        public static string Archive {
+            get {
+                return ResourceManager.GetString("Archive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
         public static System.Drawing.Bitmap clock_status {
@@ -187,6 +196,24 @@ namespace MineSweeper.Properties {
             get {
                 object obj = ResourceManager.GetObject("false_marked", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 https://zhuanlan.zhihu.com/p/633777736 的本地化字符串。
+        /// </summary>
+        public static string HelpPage {
+            get {
+                return ResourceManager.GetString("HelpPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似于 System.IO.MemoryStream 的 System.IO.UnmanagedMemoryStream 类型的本地化资源。
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream lose_bgm {
+            get {
+                return ResourceManager.GetStream("lose_bgm", resourceCulture);
             }
         }
         
@@ -290,11 +317,20 @@ namespace MineSweeper.Properties {
         }
         
         /// <summary>
-        ///   查找类似 v1.2 的本地化字符串。
+        ///   查找类似 v1.3 的本地化字符串。
         /// </summary>
         public static string Version {
             get {
                 return ResourceManager.GetString("Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似于 System.IO.MemoryStream 的 System.IO.UnmanagedMemoryStream 类型的本地化资源。
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream win_bgm {
+            get {
+                return ResourceManager.GetStream("win_bgm", resourceCulture);
             }
         }
     }

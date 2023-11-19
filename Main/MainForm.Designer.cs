@@ -87,6 +87,7 @@
             this.统计信息ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
             this.统计信息ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.统计信息ToolStripMenuItem.Text = "统计信息(&S)";
+            this.统计信息ToolStripMenuItem.Click += new System.EventHandler(this.统计信息ToolStripMenuItem_Click);
             // 
             // 选项OToolStripMenuItem
             // 

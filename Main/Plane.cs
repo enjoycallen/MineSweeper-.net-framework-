@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Media;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,88 @@ namespace MineSweeper
         public Grid[,] plane;
         public Grid focus_grid;
         public MouseButtons mouse_state = MouseButtons.None;
+        public PictureBox clock_pictureBox, mine_pictureBox;
+        public Label clock_status, mine_status;
+        public Timer timer;
+        public int time;
+
+        public void initialize(int r, int c)
+        {
+            row = r;
+            col = c;
+            SuspendLayout();
+            Size = new Size(col * 26 + 1, row * 26 + 50);
+            plane = new Grid[row, col];
+            for (int i = 0; i < row; ++i)
+            {
+                for (int j = 0; j < col; ++j)
+                {
+                    var g = plane[i, j] = new Grid(i, j);
+                    g.Location = new Point(26 * j, 26 * i);
+                    g.MouseEnter += Plane_MouseEnter;
+                    g.MouseLeave += Plane_MouseLeave;
+                    g.MouseMove += Plane_MouseMove;
+                    g.MouseDown += Plane_MouseDown;
+                    g.MouseUp += Plane_MouseUp;
+                    Controls.Add(g);
+                }
+            }
+
+            time = 0;
+            timer = new Timer();
+            timer.Interval = 1000;
+            timer.Tick += clock_status_update;
+
+            clock_pictureBox = new PictureBox();
+            clock_pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
+            clock_pictureBox.Image = Properties.Resources.clock_status;
+            clock_pictureBox.Location = new Point(0, row * 26 + 10);
+            Controls.Add(clock_pictureBox);
+
+            mine_pictureBox = new PictureBox();
+            mine_pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
+            mine_pictureBox.Image = Properties.Resources.mine_status;
+            mine_pictureBox.Location = new Point(26 * col - 37, row * 26 + 10);
+            Controls.Add(mine_pictureBox);
+
+            clock_status = new Label();
+            clock_status.Size = new Size(60, 30);
+            clock_status.Location = new Point(40, row * 26 + 13);
+            clock_status.BackColor = Color.FromArgb(48, 85, 155);
+            clock_status.ForeColor = Color.White;
+            clock_status.Text = "0";
+            clock_status.Font = new Font("Arial", 18);
+            clock_status.TextAlign = ContentAlignment.MiddleCenter;
+            Controls.Add(clock_status);
+
+            mine_status = new Label();
+            mine_status.Size = new Size(60, 30);
+            mine_status.Location = new Point(26 * col - 100, row * 26 + 13);
+            mine_status.BackColor = Color.FromArgb(48, 85, 155);
+            mine_status.ForeColor = Color.White;
+            mine_status.Text = mine.ToString();
+            mine_status.Font = new Font("Arial", 18);
+            mine_status.TextAlign = ContentAlignment.MiddleCenter;
+            Controls.Add(mine_status);
+            ResumeLayout();
+        }
+
+        public void clock_status_update(object sender, EventArgs e)
+        {
+            if (++time <= 999)
+            {
+                clock_status.Text = time.ToString();
+            }
+            else
+            {
+                clock_status.Text = "999";
+            }
+        }
+
+        public void mine_status_update(int delta)
+        {
+            mine_status.Text = (int.Parse(mine_status.Text) + delta).ToString();
+        }
 
         public void generate_mine()
         {
@@ -46,34 +129,11 @@ namespace MineSweeper
             }
         }
 
-        public void initialize(int r, int c)
-        {
-            row = r;
-            col = c;
-            SuspendLayout();
-            Size = new Size(col * 26 + 1, row * 26 + 1);
-            plane = new Grid[row, col];
-            for (int i = 0; i < row; ++i)
-            {
-                for (int j = 0; j < col; ++j)
-                {
-                    var g = plane[i, j] = new Grid(i, j);
-                    g.Location = new Point(26 * j, 26 * i);
-                    g.MouseEnter += Plane_MouseEnter;
-                    g.MouseLeave += Plane_MouseLeave;
-                    g.MouseMove += Plane_MouseMove;
-                    g.MouseDown += Plane_MouseDown;
-                    g.MouseUp += Plane_MouseUp;
-                    Controls.Add(g);
-                }
-            }
-            ResumeLayout();
-        }
-
         public void start()
         {
             generate_mine();
             started = true;
+            timer.Start();
         }
 
         public Plane(int r, int c,int m)
@@ -245,22 +305,39 @@ namespace MineSweeper
             }
         }
 
+        public void lose()
+        {
+            timer.Stop();
+            using (var bgm = new SoundPlayer(Properties.Resources.lose_bgm))
+            {
+                bgm.Play();
+            }
+            show_all_mine();
+            ((MainForm)Parent).lose();
+        }
+
+        public void win()
+        {
+            timer.Stop();
+            mine_status.Text = "0";
+            using (var bgm = new SoundPlayer(Properties.Resources.win_bgm))
+            {
+                bgm.Play();
+            }
+            show_all_mine();
+            ((MainForm)Parent).win();
+        }
+
         public void Plane_MouseUp(object sender, MouseEventArgs e)
         {
             if (click())
             {
-                show_all_mine();
-                MessageBox.Show("你输了!", "扫雷", MessageBoxButtons.OK);
-                ((MainForm)Parent).新游戏NToolStripMenuItem_Click(sender, e);
-                Dispose();
+                lose();
                 return;
             }
             if (clear())
             {
-                show_all_mine();
-                MessageBox.Show("你赢了了!", "扫雷", MessageBoxButtons.OK);
-                ((MainForm)Parent).新游戏NToolStripMenuItem_Click(sender, e);
-                Dispose();
+                win();
                 return;
             }
             mouse_state ^= e.Button;

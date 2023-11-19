@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Minesweeper.ico</ApplicationIcon>
+    <ApplicationIcon>Icon\Minesweeper.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -56,14 +56,32 @@
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Algorithm.cs" />
-    <Compile Include="Config.cs" />
-    <Compile Include="Grid.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="Archive.cs" />
+    <Compile Include="Dialogs\LoseDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Dialogs\LoseDialog.Designer.cs">
+      <DependentUpon>LoseDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\StatisticsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\StatisticsDialog.Designer.cs">
+      <DependentUpon>StatisticsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\WinDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\WinDialog.Designer.cs">
+      <DependentUpon>WinDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Grid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Main\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\OptionDialog.cs">
@@ -72,7 +90,7 @@
     <Compile Include="Dialogs\OptionDialog.Designer.cs">
       <DependentUpon>OptionDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Plane.cs">
+    <Compile Include="Main\Plane.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Program.cs" />
@@ -80,8 +98,18 @@
     <EmbeddedResource Include="Dialogs\AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Dialogs\LoseDialog.resx">
+      <DependentUpon>LoseDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\StatisticsDialog.resx">
+      <DependentUpon>StatisticsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\WinDialog.resx">
+      <DependentUpon>WinDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\OptionDialog.resx">
       <DependentUpon>OptionDialog.cs</DependentUpon>
@@ -167,7 +195,9 @@
     <None Include="Resources\false_marked.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Minesweeper.ico" />
+    <Content Include="Icon\Minesweeper.ico" />
+    <None Include="Resources\win.wav" />
+    <None Include="Resources\explode.wav" />
     <None Include="Resources\clock_tip.png" />
     <None Include="Resources\mine_tip.png" />
     <None Include="Resources\Minesweeper.png" />
