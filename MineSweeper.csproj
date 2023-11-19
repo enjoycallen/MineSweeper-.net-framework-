@@ -49,7 +49,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dialogs\AboutDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\AboutDialog.Designer.cs">
+      <DependentUpon>AboutDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Algorithm.cs" />
+    <Compile Include="Config.cs" />
     <Compile Include="Grid.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -59,22 +66,25 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="OptionForm.cs">
+    <Compile Include="Dialogs\OptionDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OptionForm.Designer.cs">
-      <DependentUpon>OptionForm.cs</DependentUpon>
+    <Compile Include="Dialogs\OptionDialog.Designer.cs">
+      <DependentUpon>OptionDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Plane.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Dialogs\AboutDialog.resx">
+      <DependentUpon>AboutDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OptionForm.resx">
-      <DependentUpon>OptionForm.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\OptionDialog.resx">
+      <DependentUpon>OptionDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -158,6 +168,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Minesweeper.ico" />
+    <None Include="Resources\clock_tip.png" />
+    <None Include="Resources\mine_tip.png" />
+    <None Include="Resources\Minesweeper.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

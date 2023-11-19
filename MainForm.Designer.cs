@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.TopMenu = new System.Windows.Forms.MenuStrip();
             this.游戏GToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.新游戏NToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
@@ -41,19 +41,19 @@
             this.查看帮助ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.关于AToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1.SuspendLayout();
+            this.TopMenu.SuspendLayout();
             this.SuspendLayout();
             // 
-            // menuStrip1
+            // TopMenu
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TopMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.游戏GToolStripMenuItem,
             this.帮助HToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(357, 25);
-            this.menuStrip1.TabIndex = 1;
-            this.menuStrip1.Text = "menuStrip1";
+            this.TopMenu.Location = new System.Drawing.Point(0, 0);
+            this.TopMenu.Name = "TopMenu";
+            this.TopMenu.Size = new System.Drawing.Size(357, 25);
+            this.TopMenu.TabIndex = 1;
+            this.TopMenu.Text = "menuStrip1";
             // 
             // 游戏GToolStripMenuItem
             // 
@@ -72,40 +72,40 @@
             // 
             this.新游戏NToolStripMenuItem.Name = "新游戏NToolStripMenuItem";
             this.新游戏NToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.新游戏NToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.新游戏NToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.新游戏NToolStripMenuItem.Text = "新游戏(&N)";
             this.新游戏NToolStripMenuItem.Click += new System.EventHandler(this.新游戏NToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(157, 6);
             // 
             // 统计信息ToolStripMenuItem
             // 
             this.统计信息ToolStripMenuItem.Name = "统计信息ToolStripMenuItem";
             this.统计信息ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
-            this.统计信息ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.统计信息ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.统计信息ToolStripMenuItem.Text = "统计信息(&S)";
             // 
             // 选项OToolStripMenuItem
             // 
             this.选项OToolStripMenuItem.Name = "选项OToolStripMenuItem";
             this.选项OToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.选项OToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.选项OToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.选项OToolStripMenuItem.Text = "选项(&O)";
             this.选项OToolStripMenuItem.Click += new System.EventHandler(this.选项OToolStripMenuItem_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(157, 6);
             // 
             // 退出XToolStripMenuItem
             // 
             this.退出XToolStripMenuItem.Name = "退出XToolStripMenuItem";
             this.退出XToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7;
-            this.退出XToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.退出XToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.退出XToolStripMenuItem.Text = "退出(&X)";
             this.退出XToolStripMenuItem.Click += new System.EventHandler(this.退出XToolStripMenuItem_Click);
             // 
@@ -125,6 +125,7 @@
             this.查看帮助ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
             this.查看帮助ToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.查看帮助ToolStripMenuItem.Text = "查看帮助(&V)";
+            this.查看帮助ToolStripMenuItem.Click += new System.EventHandler(this.查看帮助ToolStripMenuItem_Click);
             // 
             // toolStripMenuItem4
             // 
@@ -136,19 +137,21 @@
             this.关于AToolStripMenuItem.Name = "关于AToolStripMenuItem";
             this.关于AToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.关于AToolStripMenuItem.Text = "关于(&A)";
+            this.关于AToolStripMenuItem.Click += new System.EventHandler(this.关于AToolStripMenuItem_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(159)))), ((int)(((byte)(170)))), ((int)(((byte)(199)))));
             this.ClientSize = new System.Drawing.Size(357, 395);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.TopMenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "扫雷";
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.TopMenu.ResumeLayout(false);
+            this.TopMenu.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -156,7 +159,7 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip TopMenu;
         private System.Windows.Forms.ToolStripMenuItem 游戏GToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 新游戏NToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;

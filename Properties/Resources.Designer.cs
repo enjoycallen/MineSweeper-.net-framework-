@@ -143,6 +143,16 @@ namespace MineSweeper.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        public static System.Drawing.Bitmap clock_status {
+            get {
+                object obj = ResourceManager.GetObject("clock_status", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         public static System.Drawing.Bitmap concealed {
             get {
                 object obj = ResourceManager.GetObject("concealed", resourceCulture);
@@ -223,6 +233,35 @@ namespace MineSweeper.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        public static System.Drawing.Bitmap mine_status {
+            get {
+                object obj = ResourceManager.GetObject("mine_status", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap MineSweeper {
+            get {
+                object obj = ResourceManager.GetObject("MineSweeper", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 2023/11/19 的本地化字符串。
+        /// </summary>
+        public static string PublishDate {
+            get {
+                return ResourceManager.GetString("PublishDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         public static System.Drawing.Bitmap question_mark {
             get {
                 object obj = ResourceManager.GetObject("question_mark", resourceCulture);
@@ -247,6 +286,15 @@ namespace MineSweeper.Properties {
             get {
                 object obj = ResourceManager.GetObject("question_mark_mouseover", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 v1.1 的本地化字符串。
+        /// </summary>
+        public static string Version {
+            get {
+                return ResourceManager.GetString("Version", resourceCulture);
             }
         }
     }

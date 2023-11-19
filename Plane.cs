@@ -12,60 +12,49 @@ namespace MineSweeper
 {
     public class Plane : Control
     {
-        static private int[] dx = { -1, 0, 1, -1, 1, -1, 0, 1 }, dy = { -1, -1, -1, 0, 0, 1, 1, 1 };
+        public int row, col, mine;
+        public Grid[,] plane;
+        public Grid focus_grid;
+        public MouseButtons mouse_state = MouseButtons.None;
 
-        private int row, col;
-        private int[,] mine;
-        private Grid[,] plane;
-        private Grid focus_grid;
-        private MouseButtons mouse_state = MouseButtons.None;
-
-        private void swap<T>(ref T a,ref T b)
-        {
-            T c = a;
-            a = b;
-            b = c;
-        }
-
-        private void generate_mine(int m)
+        public void generate_mine(int m, int r, int c)
         {
             int[] a = new int[row * col];
             for (int i = 0; i < a.Length; ++i)
             {
                 a[i] = i < m ? 1 : 0;
             }
-            var algorithm = new Algorithm();
-            algorithm.random_shuffle(a);
-            mine = algorithm.transform1Dto2D(a, col);
+            int[,] map = new int[row, col];
+            while (true)
+            {
+                Algorithm.random_shuffle(a);
+                map = Algorithm.ArrayToMatrix(a, col);
+                if (map[r, c] == 0)
+                {
+                    break;
+                }
+            }
+            for (int i = 0; i < row; ++i)
+            {
+                for (int j = 0; j < col; ++j)
+                {
+                    plane[i, j].value = map[i, j] == 1 ? 9 : Algorithm.MatrixNeightbour(map, i, j).Sum();
+                }
+            }
         }
 
-        private void generate_plane()
+        public void initialize(int r, int c)
         {
+            row = r;
+            col = c;
             SuspendLayout();
+            Size = new Size(col * 26 + 1, row * 26 + 1);
             plane = new Grid[row, col];
             for (int i = 0; i < row; ++i)
             {
                 for (int j = 0; j < col; ++j)
                 {
-                    int value;
-                    if (mine[i, j] == 1)
-                    {
-                        value = 9;
-                    }
-                    else
-                    {
-                        value = 0;
-                        for (int k = 0; k < 8; ++k)
-                        {
-                            int x = i + dx[k], y = j + dy[k];
-                            if (x >= 0 && x < row && y >= 0 && y < col)
-                            {
-                                value += mine[x, y];
-                            }
-                        }
-                    }
-                    var g = plane[i, j] = new Grid(i, j, value, Grid.GridState.Concealed);
-                    g.Name = "grid" + i.ToString() + "_" + j.ToString();
+                    var g = plane[i, j] = new Grid(i, j);
                     g.Location = new Point(26 * j, 26 * i);
                     g.MouseEnter += Plane_MouseEnter;
                     g.MouseLeave += Plane_MouseLeave;
@@ -78,35 +67,17 @@ namespace MineSweeper
             ResumeLayout();
         }
 
-        public Plane(int r, int c, int m)
+        public Plane(int r, int c)
         {
-            row = r;
-            col = c;
-            Size = new Size(col * 26 + 1, row * 26 + 1);
-            generate_mine(m);
-            generate_plane();
+            initialize(r, c);
         }
 
-        private bool valid_position(int x, int y)
+        public List<Grid> neighbour(Grid grid)
         {
-            return x >= 0 && x < row && y >= 0 && y < col;
+            return Algorithm.MatrixNeightbour(plane, grid.row, grid.col);
         }
 
-        private List<Grid> neighbour(Grid g)
-        {
-            var list = new List<Grid>();
-            for (int i = 0; i < 8; ++i)
-            {
-                int x = g.row + dx[i], y = g.col + dy[i];
-                if (valid_position(x, y))
-                {
-                    list.Add(plane[x, y]);
-                }
-            }
-            return list;
-        }
-
-        private void focus()
+        public void focus()
         {
             if (focus_grid == null)
             {
@@ -134,7 +105,7 @@ namespace MineSweeper
             }
         }
 
-        private void lostfocus()
+        public void lostfocus()
         {
             if (focus_grid == null)
             {
@@ -162,7 +133,7 @@ namespace MineSweeper
             }
         }
 
-        private bool click()
+        public bool click()
         {
             if (focus_grid == null)
             {
@@ -171,14 +142,14 @@ namespace MineSweeper
             lostfocus();
             if (mouse_state.HasFlag(MouseButtons.Left) && mouse_state.HasFlag(MouseButtons.Right))
             {
-                if (focus_grid.state != Grid.GridState.Exposed)
+                if (focus_grid.state != Grid.State.Exposed)
                 {
                     return false;
                 }
                 int marked = 0;
                 foreach (var grid in neighbour(focus_grid))
                 {
-                    if (grid.state == Grid.GridState.Marked)
+                    if (grid.state == Grid.State.Marked)
                     {
                         ++marked;
                     }
@@ -207,9 +178,9 @@ namespace MineSweeper
             return false;
         }
 
-        private bool floodfill(Grid grid)
+        public bool floodfill(Grid grid)
         {
-            if (grid.state == Grid.GridState.Exposed || grid.state == Grid.GridState.Marked)
+            if (grid.state == Grid.State.Exposed || grid.state == Grid.State.Marked)
             {
                 return false;
             }
@@ -223,7 +194,7 @@ namespace MineSweeper
             }
             foreach (var g in neighbour(grid))
             {
-                if (g.state != Grid.GridState.Exposed && floodfill(g))
+                if (g.state != Grid.State.Exposed && floodfill(g))
                 {
                     return true;
                 }
@@ -231,11 +202,11 @@ namespace MineSweeper
             return false;
         }
 
-        private bool clear()
+        public bool clear()
         {
             foreach (var grid in plane)
             {
-                if (grid.value <= 8 && grid.state != Grid.GridState.Exposed)
+                if (grid.value <= 8 && grid.state != Grid.State.Exposed)
                 {
                     return false;
                 }
@@ -243,23 +214,23 @@ namespace MineSweeper
             return true;
         }
 
-        private void show_all_mine()
+        public void show_all_mine()
         {
             foreach (var grid in plane)
             {
-                if (grid.value < 9 && grid.state == Grid.GridState.Marked)
+                if (grid.value < 9 && grid.state == Grid.State.Marked)
                 {
                     grid.value = 11;
                     grid.show();
                 }
-                if (grid.value == 9 && grid.state != Grid.GridState.Marked)
+                if (grid.value == 9 && grid.state != Grid.State.Marked)
                 {
                     grid.show();
                 }
             }
         }
 
-        private void Plane_MouseUp(object sender, MouseEventArgs e)
+        public void Plane_MouseUp(object sender, MouseEventArgs e)
         {
             if (click())
             {
@@ -280,23 +251,23 @@ namespace MineSweeper
             mouse_state ^= e.Button;
         }
 
-        private void Plane_MouseDown(object sender, MouseEventArgs e)
+        public void Plane_MouseDown(object sender, MouseEventArgs e)
         {
             mouse_state ^= e.Button;
             focus();
         }
 
-        private void Plane_MouseEnter(object sender, EventArgs e)
+        public void Plane_MouseEnter(object sender, EventArgs e)
         {
             focus();
         }
 
-        private void Plane_MouseLeave(object sender, EventArgs e)
+        public void Plane_MouseLeave(object sender, EventArgs e)
         {
             lostfocus();
         }
 
-        private void Plane_MouseMove(object sender, MouseEventArgs e)
+        public void Plane_MouseMove(object sender, MouseEventArgs e)
         {
             var grid = (Grid)sender;
             lostfocus();
@@ -307,13 +278,13 @@ namespace MineSweeper
             else
             {
                 int x = (grid.row * 26 + e.Y) / 26, y = (grid.col * 26 + e.X) / 26;
-                if (!valid_position(x, y))
+                if (x >= 0 && x < row && y >= 0 && y < col)
                 {
-                    focus_grid = null;
+                    focus_grid = plane[x, y];
                 }
                 else
                 {
-                    focus_grid = plane[x, y];
+                    focus_grid = null;
                 }
             }
             focus();

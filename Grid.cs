@@ -12,8 +12,8 @@ namespace MineSweeper
     public class Grid : Button
     {
         //图案资源
-        private static readonly dynamic[] Pattern;
-        private static readonly dynamic empty, concealed, concealed_mouseover, marked, marked_mouseover, question_mark, question_mark_mouseover, question_mark_mousedown;
+        public static readonly dynamic[] Pattern;
+        public static readonly dynamic empty, concealed, concealed_mouseover, marked, marked_mouseover, question_mark, question_mark_mouseover, question_mark_mousedown;
 
         //静态构造函数
         static Grid()
@@ -32,6 +32,7 @@ namespace MineSweeper
             Pattern[9] = Properties.Resources.mine;
             Pattern[10] = Properties.Resources.mine_red;
             Pattern[11] = Properties.Resources.false_marked;
+
             concealed = Properties.Resources.concealed;
             concealed_mouseover = Properties.Resources.concealed_mouseover;
             marked = Properties.Resources.marked;
@@ -42,7 +43,7 @@ namespace MineSweeper
         }
 
         //格子状态类型
-        public enum GridState
+        public enum State
         {
             Concealed = 1,          //隐藏
             Exposed = 2,            //揭开
@@ -52,50 +53,61 @@ namespace MineSweeper
 
         public int row, col;
         public int value;          //值
-        public GridState state;            //状态
+        public State state;            //状态
 
-        public Grid(int r, int c, int v, GridState init)
+        public Grid(int r, int c)
         {
-            SuspendLayout();
-            Name = "Grid" + r.ToString() + "_" + c.ToString();
-            FlatStyle = FlatStyle.Flat;
-            Location = new Point(0, 0);
-            Size = new Size(27, 27);
-            ResumeLayout();
-
             row = r;
             col = c;
+            initialize();
+            value = 0;
+            state = State.Concealed;
+        }
+
+        public Grid(int r, int c, int v, State init_state)
+        {
+            row = r;
+            col = c;
+            initialize();
             value = v;
-            state = init;
-            if (init == GridState.Concealed)
+            state = init_state;
+            if (state == State.Concealed)
             {
                 Image = concealed;
             }
-            else if (init == GridState.Exposed)
+            else if (state == State.Exposed)
             {
                 Image = Pattern[value];
             }
-            else if (init == GridState.Marked)
+            else if (state == State.Marked)
             {
                 Image = marked;
             }
-            else if (init == GridState.Undetermined)
+            else
             {
                 Image = question_mark;
             }
         }
 
+        public void initialize()
+        {
+            Name = "Grid" + row.ToString() + "_" + col.ToString();
+            FlatStyle = FlatStyle.Flat;
+            Location = new Point(0, 0);
+            Size = new Size(27, 27);
+        }
+
         public void focus()
         {
-            if (state == GridState.Concealed)
+            if (state == State.Concealed)
             {
                 Image = concealed_mouseover;
             }
-            else if (state == GridState.Marked)
+            else if (state == State.Marked)
             {
                 Image = marked_mouseover;
             }
-            else if (state == GridState.Undetermined)
+            else if (state == State.Undetermined)
             {
                 Image = question_mark_mouseover;
             }
@@ -103,15 +115,15 @@ namespace MineSweeper
 
         public void lostfocus()
         {
-            if (state == GridState.Concealed)
+            if (state == State.Concealed)
             {
                 Image = concealed;
             }
-            else if (state == GridState.Marked)
+            else if (state == State.Marked)
             {
                 Image = marked;
             }
-            else if (state == GridState.Undetermined)
+            else if (state == State.Undetermined)
             {
                 Image = question_mark;
             }
@@ -119,15 +131,15 @@ namespace MineSweeper
 
         public void press()
         {
-            if (state == GridState.Concealed)
+            if (state == State.Concealed)
             {
                 Image = empty;
             }
-            else if (state == GridState.Marked)
+            else if (state == State.Marked)
             {
                 Image = marked;
             }
-            else if (state == GridState.Undetermined)
+            else if (state == State.Undetermined)
             {
                 Image = question_mark_mousedown;
             }
@@ -135,17 +147,17 @@ namespace MineSweeper
 
         public bool reveal()
         {
-            if (state == GridState.Concealed || state == GridState.Undetermined)
+            if (state == State.Concealed || state == State.Undetermined)
             {
                 if (value == 9)
                 {
                     value = 10;
                 }
                 Image = Pattern[value];
-                state = GridState.Exposed;
+                state = State.Exposed;
                 return value > 8;
             }
-            if (state == GridState.Marked)
+            if (state == State.Marked)
             {
                 Image = marked;
             }
@@ -155,25 +167,25 @@ namespace MineSweeper
         public void show()
         {
             Image = Pattern[value];
-            state = GridState.Exposed;
+            state = State.Exposed;
         }
 
         public void transform()
         {
-            if (state == GridState.Concealed)
+            if (state == State.Concealed)
             {
                 Image = marked_mouseover;
-                state = GridState.Marked;
+                state = State.Marked;
             }
-            else if (state == GridState.Marked)
+            else if (state == State.Marked)
             {
                 Image = question_mark_mouseover;
-                state = GridState.Undetermined;
+                state = State.Undetermined;
             }
-            else if (state == GridState.Undetermined)
+            else if (state == State.Undetermined)
             {
                 Image = concealed_mouseover;
-                state = GridState.Concealed;
+                state = State.Concealed;
             }
         }
     }

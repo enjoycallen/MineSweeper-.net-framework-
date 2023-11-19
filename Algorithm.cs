@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace MineSweeper
 {
-    public class Algorithm
+    public static class Algorithm
     {
-        public void swap<T>(ref T a, ref T b)
+        public static void swap<T>(ref T a, ref T b)
         {
             (a, b) = (b, a);
         }
 
-        public void random_shuffle<T>(T[] a)
+        public static void random_shuffle<T>(T[] a)
         {
             Random rand = new Random();
             for (int i = 0; i < a.Length; ++i)
@@ -24,17 +24,17 @@ namespace MineSweeper
             }
         }
 
-        public T[,] transform1Dto2D<T>(T[] a, int seg)
+        public static T[,] ArrayToMatrix<T>(T[] a, int split)
         {
-            T[,] b = new T[a.Length / seg, seg];
+            T[,] b = new T[a.Length / split, split];
             for (int i = 0; i < a.Length; ++i)
             {
-                b[i / seg, i % seg] = a[i];
+                b[i / split, i % split] = a[i];
             }
             return b;
         }
 
-        public int StringToInt(string s)
+        public static int StringToInt(string s)
         {
             string str = "";
             foreach(char c in s)
@@ -50,6 +50,22 @@ namespace MineSweeper
                 return 0;
             }
             return int.Parse(str);
+        }
+
+        public static List<T> MatrixNeightbour<T>(T[,] a, int r, int c)
+        {
+            int[] dx = { -1, -1, -1, 0, 0, 1, 1, 1 }, dy = { -1, 0, 1, -1, 1, -1, 0, 1 };
+            int row = a.GetLength(0), col = a.GetLength(1);
+            var list = new List<T>();
+            for (int i = 0; i < 8; ++i)
+            {
+                int x = r + dx[i], y = c + dy[i];
+                if (x >= 0 && x < row && y >= 0 && y < col)
+                {
+                    list.Add(a[x, y]);
+                }
+            }
+            return list;
         }
     }
 }
