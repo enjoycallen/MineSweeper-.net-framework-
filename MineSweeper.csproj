@@ -55,8 +55,8 @@
     <Compile Include="Dialogs\AboutDialog.Designer.cs">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Algorithm.cs" />
-    <Compile Include="Archive.cs" />
+    <Compile Include="Others\Algorithm.cs" />
+    <Compile Include="Others\Archive.cs" />
     <Compile Include="Dialogs\LoseDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,7 +93,7 @@
     <Compile Include="Main\Plane.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="Main\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Dialogs\AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
@@ -135,7 +135,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="Main\App.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\1.png" />
