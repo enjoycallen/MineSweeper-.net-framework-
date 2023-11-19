@@ -33,5 +33,23 @@ namespace MineSweeper
             }
             return b;
         }
+
+        public int StringToInt(string s)
+        {
+            string str = "";
+            foreach(char c in s)
+            {
+                if (!char.IsDigit(c))
+                {
+                    break;
+                }
+                str += c;
+            }
+            if (str == "")
+            {
+                return 0;
+            }
+            return int.Parse(str);
+        }
     }
 }

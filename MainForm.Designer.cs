@@ -94,6 +94,7 @@
             this.选项OToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
             this.选项OToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.选项OToolStripMenuItem.Text = "选项(&O)";
+            this.选项OToolStripMenuItem.Click += new System.EventHandler(this.选项OToolStripMenuItem_Click);
             // 
             // toolStripMenuItem3
             // 

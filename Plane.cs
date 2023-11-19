@@ -66,13 +66,13 @@ namespace MineSweeper
                     }
                     var g = plane[i, j] = new Grid(i, j, value, Grid.GridState.Concealed);
                     g.Name = "grid" + i.ToString() + "_" + j.ToString();
-                    g.Parent = this;
                     g.Location = new Point(26 * j, 26 * i);
                     g.MouseEnter += Plane_MouseEnter;
                     g.MouseLeave += Plane_MouseLeave;
                     g.MouseMove += Plane_MouseMove;
                     g.MouseDown += Plane_MouseDown;
                     g.MouseUp += Plane_MouseUp;
+                    Controls.Add(g);
                 }
             }
             ResumeLayout();
@@ -82,7 +82,7 @@ namespace MineSweeper
         {
             row = r;
             col = c;
-            Size = new Size(row * 26 + 1, col * 26 + 1);
+            Size = new Size(col * 26 + 1, row * 26 + 1);
             generate_mine(m);
             generate_plane();
         }
