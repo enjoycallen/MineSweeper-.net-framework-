@@ -62,6 +62,7 @@ namespace MineSweeper
             initialize();
             value = 0;
             state = State.Concealed;
+            Image = concealed;
         }
 
         public Grid(int r, int c, int v, State init_state)

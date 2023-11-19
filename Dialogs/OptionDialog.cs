@@ -93,9 +93,9 @@ namespace MineSweeper
                     MessageBox.Show("宽度必须在9-24之间！", "扫雷-选项", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     e.Cancel = true;
                 }
-                else if (mine < 10 || mine > 0.6 * row * col)
+                else if (mine < 10 || mine > 0.35 * row * col)
                 {
-                    MessageBox.Show("雷数必须在10-" + (int)(0.6 * row * col) + "之间！", "扫雷-选项", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("雷数必须在10-" + (int)(0.35 * row * col) + "之间！", "扫雷-选项", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     e.Cancel = true;
                 }
             }

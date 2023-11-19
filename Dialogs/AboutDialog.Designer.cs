@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutDialog));
             this.label1 = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -41,8 +41,8 @@
             this.label1.Location = new System.Drawing.Point(100, 20);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(203, 84);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "NJUPT B20030919陈天 程序设计 扫雷\r\n\r\n版本：v1.1\r\n\r\n发布时间：2023/11/19\r\n\r\n项目地址：";
+            this.label1.TabIndex = 0;
+            this.label1.Text = "NJUPT B20030919陈天 程序设计 扫雷\n\n版本：v1.2\n\n发布时间：2023/11/19\n\n项目地址：";
             // 
             // linkLabel1
             // 
@@ -51,13 +51,12 @@
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(257, 12);
             this.linkLabel1.TabIndex = 2;
-            this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "https://github.com/enjoycallen/MineSweeper";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = Properties.Resources.MineSweeper;
+            this.pictureBox1.Image = global::MineSweeper.Properties.Resources.MineSweeper;
             this.pictureBox1.Location = new System.Drawing.Point(20, 20);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(64, 64);
@@ -65,11 +64,24 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
+            // button1
+            // 
+            this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.button1.Location = new System.Drawing.Point(0, 0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(0, 0);
+            this.button1.TabIndex = 1;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // AboutDialog
             // 
+            this.AcceptButton = this.button1;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.button1;
             this.ClientSize = new System.Drawing.Size(389, 147);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
@@ -78,7 +90,6 @@
             this.MinimizeBox = false;
             this.Name = "AboutDialog";
             this.Text = "关于“扫雷”";
-            this.Load += new System.EventHandler(this.AboutDialog_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -90,5 +101,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Button button1;
     }
 }

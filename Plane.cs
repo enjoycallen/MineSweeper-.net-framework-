@@ -12,24 +12,27 @@ namespace MineSweeper
 {
     public class Plane : Control
     {
+        public bool started;
         public int row, col, mine;
         public Grid[,] plane;
         public Grid focus_grid;
         public MouseButtons mouse_state = MouseButtons.None;
 
-        public void generate_mine(int m, int r, int c)
+        public void generate_mine()
         {
             int[] a = new int[row * col];
             for (int i = 0; i < a.Length; ++i)
             {
-                a[i] = i < m ? 1 : 0;
+                a[i] = i < mine ? 1 : 0;
             }
+
             int[,] map = new int[row, col];
+            int r = focus_grid.row, c = focus_grid.col;
             while (true)
             {
                 Algorithm.random_shuffle(a);
                 map = Algorithm.ArrayToMatrix(a, col);
-                if (map[r, c] == 0)
+                if (map[r, c] == 0 && Algorithm.MatrixNeightbour(map, r, c).Sum() == 0)
                 {
                     break;
                 }
@@ -67,8 +70,16 @@ namespace MineSweeper
             ResumeLayout();
         }
 
-        public Plane(int r, int c)
+        public void start()
         {
+            generate_mine();
+            started = true;
+        }
+
+        public Plane(int r, int c,int m)
+        {
+            started = false;
+            mine = m;
             initialize(r, c);
         }
 
@@ -169,6 +180,10 @@ namespace MineSweeper
             }
             else if (mouse_state.HasFlag(MouseButtons.Left))
             {
+                if (!started)
+                {
+                    start();
+                }
                 return floodfill(focus_grid);
             }
             else if (mouse_state.HasFlag(MouseButtons.Right))
