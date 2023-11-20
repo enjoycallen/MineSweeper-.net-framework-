@@ -100,24 +100,23 @@ namespace MineSweeper
         {
             mine_status.Text = (int.Parse(mine_status.Text) + delta).ToString();
         }
-
+        
         public void generate_mine()
         {
-            int[] a = new int[row * col];
+            var blank = Algorithm.MatrixNeightbour(plane, focus_grid.row, focus_grid.col);
+            blank.Add(focus_grid);
+            int[] a = new int[row * col - blank.Count];
             for (int i = 0; i < a.Length; ++i)
             {
                 a[i] = i < mine ? 1 : 0;
             }
-
+            Algorithm.RandomShuffle(a);
             int[,] map = new int[row, col];
-            int r = focus_grid.row, c = focus_grid.col;
-            while (true)
+            for (int i = 0, cur = 0; i < row; ++i)
             {
-                Algorithm.random_shuffle(a);
-                map = Algorithm.ArrayToMatrix(a, col);
-                if (map[r, c] == 0 && Algorithm.MatrixNeightbour(map, r, c).Sum() == 0)
+                for(int j = 0; j < col; ++j)
                 {
-                    break;
+                    map[i, j] = blank.Find(x => x == plane[i, j]) == null ? a[cur++] : 0;
                 }
             }
             for (int i = 0; i < row; ++i)

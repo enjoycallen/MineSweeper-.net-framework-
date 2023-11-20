@@ -9,29 +9,19 @@ namespace MineSweeper
 {
     public static class Algorithm
     {
-        public static void swap<T>(ref T a, ref T b)
+        public static void Swap<T>(ref T a, ref T b)
         {
             (a, b) = (b, a);
         }
 
-        public static void random_shuffle<T>(T[] a)
+        public static void RandomShuffle<T>(T[] a)
         {
             Random rand = new Random();
             for (int i = 0; i < a.Length; ++i)
             {
                 int j = rand.Next(i + 1);
-                swap(ref a[i], ref a[j]);
+                Swap(ref a[i], ref a[j]);
             }
-        }
-
-        public static T[,] ArrayToMatrix<T>(T[] a, int split)
-        {
-            T[,] b = new T[a.Length / split, split];
-            for (int i = 0; i < a.Length; ++i)
-            {
-                b[i / split, i % split] = a[i];
-            }
-            return b;
         }
 
         public static int StringToInt(string s)

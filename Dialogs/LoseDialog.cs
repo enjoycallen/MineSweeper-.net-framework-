@@ -29,16 +29,5 @@ namespace MineSweeper.Dialogs
         {
             DialogResult = DialogResult.OK;
         }
-
-        private void LoseDialog_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (player_textBox.Text == "")
-            {
-                MessageBox.Show("玩家名称不能为空！", "扫雷", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                e.Cancel = true;
-                return;
-            }
-
-        }
     }
 }

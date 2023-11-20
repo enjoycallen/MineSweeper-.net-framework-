@@ -31,8 +31,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.player_textBox = new System.Windows.Forms.TextBox();
             this.exit_button = new System.Windows.Forms.Button();
             this.replay_button = new System.Windows.Forms.Button();
             this.time_label = new System.Windows.Forms.Label();
@@ -66,26 +64,9 @@
             this.label3.TabIndex = 1;
             this.label3.Text = "日期：";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(26, 160);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(65, 12);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "玩家名称：";
-            // 
-            // player_textBox
-            // 
-            this.player_textBox.Location = new System.Drawing.Point(102, 157);
-            this.player_textBox.MaxLength = 16;
-            this.player_textBox.Name = "player_textBox";
-            this.player_textBox.Size = new System.Drawing.Size(223, 21);
-            this.player_textBox.TabIndex = 2;
-            // 
             // exit_button
             // 
-            this.exit_button.Location = new System.Drawing.Point(28, 208);
+            this.exit_button.Location = new System.Drawing.Point(28, 160);
             this.exit_button.Name = "exit_button";
             this.exit_button.Size = new System.Drawing.Size(130, 30);
             this.exit_button.TabIndex = 3;
@@ -96,7 +77,7 @@
             // replay_button
             // 
             this.replay_button.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.replay_button.Location = new System.Drawing.Point(195, 208);
+            this.replay_button.Location = new System.Drawing.Point(195, 160);
             this.replay_button.Name = "replay_button";
             this.replay_button.Size = new System.Drawing.Size(130, 30);
             this.replay_button.TabIndex = 3;
@@ -126,13 +107,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.replay_button;
-            this.ClientSize = new System.Drawing.Size(358, 271);
+            this.ClientSize = new System.Drawing.Size(358, 211);
             this.Controls.Add(this.date_label);
             this.Controls.Add(this.time_label);
             this.Controls.Add(this.replay_button);
             this.Controls.Add(this.exit_button);
-            this.Controls.Add(this.player_textBox);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -141,7 +120,6 @@
             this.MinimizeBox = false;
             this.Name = "LoseDialog";
             this.Text = "游戏失败";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LoseDialog_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -152,8 +130,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox player_textBox;
         private System.Windows.Forms.Button exit_button;
         private System.Windows.Forms.Button replay_button;
         private System.Windows.Forms.Label time_label;

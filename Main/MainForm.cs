@@ -33,7 +33,10 @@ namespace MineSweeper
         {
             using (var windialog = new WinDialog(plane.time))
             {
-                windialog.ShowDialog();
+                if (windialog.ShowDialog() == DialogResult.Cancel)
+                {
+                    Close();
+                }
             }
             NewGame();
         }
