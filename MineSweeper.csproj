@@ -49,69 +49,81 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dialogs\AboutDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\AboutDialog.Designer.cs">
-      <DependentUpon>AboutDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Others\Algorithm.cs" />
-    <Compile Include="Others\Archive.cs" />
-    <Compile Include="Dialogs\LoseDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\LoseDialog.Designer.cs">
-      <DependentUpon>LoseDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\StatisticsDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\StatisticsDialog.Designer.cs">
-      <DependentUpon>StatisticsDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\WinDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\WinDialog.Designer.cs">
-      <DependentUpon>WinDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Main\Grid.cs">
+    <Compile Include="Data\Grid.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Main\MainForm.cs">
+    <Compile Include="Data\Game.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Data\Position.cs" />
+    <Compile Include="Data\Ranking.cs" />
+    <Compile Include="Data\Record.cs" />
+    <Compile Include="Data\Setting.cs" />
+    <Compile Include="Data\Reader.cs" />
+    <Compile Include="Data\Shape.cs" />
+    <Compile Include="Data\Writer.cs" />
+    <Compile Include="Forms\AboutDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\MainForm.Designer.cs">
+    <Compile Include="Forms\AboutDialog.Designer.cs">
+      <DependentUpon>AboutDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithm.cs" />
+    <Compile Include="Forms\LoseDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LoseDialog.Designer.cs">
+      <DependentUpon>LoseDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StatisticsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StatisticsDialog.Designer.cs">
+      <DependentUpon>StatisticsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\WinDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\WinDialog.Designer.cs">
+      <DependentUpon>WinDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Component\Grid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\OptionDialog.cs">
+    <Compile Include="Forms\OptionDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\OptionDialog.Designer.cs">
+    <Compile Include="Forms\OptionDialog.Designer.cs">
       <DependentUpon>OptionDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\Plane.cs">
+    <Compile Include="Component\Game.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Main\Program.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Dialogs\AboutDialog.resx">
+    <EmbeddedResource Include="Forms\AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\LoseDialog.resx">
+    <EmbeddedResource Include="Forms\LoseDialog.resx">
       <DependentUpon>LoseDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\StatisticsDialog.resx">
+    <EmbeddedResource Include="Forms\StatisticsDialog.resx">
       <DependentUpon>StatisticsDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\WinDialog.resx">
+    <EmbeddedResource Include="Forms\WinDialog.resx">
       <DependentUpon>WinDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Main\MainForm.resx">
+    <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\OptionDialog.resx">
+    <EmbeddedResource Include="Forms\OptionDialog.resx">
       <DependentUpon>OptionDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -135,7 +147,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Main\App.config" />
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\1.png" />

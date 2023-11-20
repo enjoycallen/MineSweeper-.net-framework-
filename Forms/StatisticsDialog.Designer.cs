@@ -54,24 +54,25 @@
             this.groupBox1.Controls.Add(this.rank_label);
             this.groupBox1.Location = new System.Drawing.Point(186, 28);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(333, 180);
+            this.groupBox1.Size = new System.Drawing.Size(410, 117);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "排行";
+            this.groupBox1.Text = "排行榜";
             // 
             // rank_label
             // 
             this.rank_label.AutoSize = true;
             this.rank_label.Location = new System.Drawing.Point(22, 30);
             this.rank_label.Name = "rank_label";
-            this.rank_label.Size = new System.Drawing.Size(0, 12);
+            this.rank_label.Size = new System.Drawing.Size(11, 12);
             this.rank_label.TabIndex = 0;
+            this.rank_label.Text = "排名\t玩家名称\t用时(秒)\t日期\n";
             // 
             // StatisticsDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(549, 230);
+            this.ClientSize = new System.Drawing.Size(614, 161);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.level_listBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -79,6 +80,7 @@
             this.MinimizeBox = false;
             this.Name = "StatisticsDialog";
             this.Text = "统计信息";
+            this.Load += new System.EventHandler(this.StatisticsDialog_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

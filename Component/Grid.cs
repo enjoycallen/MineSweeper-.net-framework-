@@ -9,30 +9,26 @@ using System.Drawing;
 
 namespace MineSweeper
 {
-    public class Grid : Button
+    public partial class Grid : Button
     {
-        //图案资源
-        public static readonly dynamic[] Pattern;
-        public static readonly dynamic empty, concealed, concealed_mouseover, marked, marked_mouseover, question_mark, question_mark_mouseover, question_mark_mousedown;
-
         //静态构造函数
         static Grid()
         {
             //初始化图案资源
-            Pattern = new dynamic[12];
-            Pattern[0] = empty = Properties.Resources.empty;
-            Pattern[1] = Properties.Resources._1;
-            Pattern[2] = Properties.Resources._2;
-            Pattern[3] = Properties.Resources._3;
-            Pattern[4] = Properties.Resources._4;
-            Pattern[5] = Properties.Resources._5;
-            Pattern[6] = Properties.Resources._6;
-            Pattern[7] = Properties.Resources._7;
-            Pattern[8] = Properties.Resources._8;
-            Pattern[9] = Properties.Resources.mine;
-            Pattern[10] = Properties.Resources.mine_red;
-            Pattern[11] = Properties.Resources.false_marked;
+            Pattern = new Dictionary<Type, dynamic>
+            {
+                {Type.Zero,Properties.Resources.blank },
+                {Type.One,Properties.Resources._1 },
+                {Type.Two,Properties.Resources._2 },
+                {Type.Three,Properties.Resources._3 },
+                {Type.Four,Properties.Resources._4 },
+                {Type.Five,Properties.Resources._5 },
+                {Type.Six,Properties.Resources._6 },
+                {Type.Seven,Properties.Resources._7 },
+                {Type.Eight,Properties.Resources._8 }
+            };
 
+            blank = Properties.Resources.blank;
             concealed = Properties.Resources.concealed;
             concealed_mouseover = Properties.Resources.concealed_mouseover;
             marked = Properties.Resources.marked;
@@ -40,45 +36,31 @@ namespace MineSweeper
             question_mark = Properties.Resources.question_mark;
             question_mark_mouseover = Properties.Resources.question_mark_mouseover;
             question_mark_mousedown = Properties.Resources.question_mark_mousedown;
+            mine = Properties.Resources.mine;
+            mine_red = Properties.Resources.mine_red;
+            false_marked = Properties.Resources.false_marked;
         }
 
-        //格子状态类型
-        public enum State
+        public void initialize()
         {
-            Concealed = 1,          //隐藏
-            Exposed = 2,            //揭开
-            Marked = 4,             //地雷
-            Undetermined = 8        //不确定
-        };
-
-        public int row, col;
-        public int value;          //值
-        public State state;            //状态
-
-        public Grid(int r, int c)
-        {
-            row = r;
-            col = c;
-            initialize();
-            value = 0;
-            state = State.Concealed;
-            Image = concealed;
+            FlatStyle = FlatStyle.Flat;
+            Location = new Point(0, 0);
+            Size = new Size(27, 27);
         }
 
-        public Grid(int r, int c, int v, State init_state)
+        public Grid(Position position, Type type = Type.Zero, State state = State.Concealed)
         {
-            row = r;
-            col = c;
             initialize();
-            value = v;
-            state = init_state;
+            this.position = position;
+            this.type = type;
+            this.state = state;
             if (state == State.Concealed)
             {
                 Image = concealed;
             }
-            else if (state == State.Exposed)
+            else if (state == State.Revealed)
             {
-                Image = Pattern[value];
+                Image = Pattern[type];
             }
             else if (state == State.Marked)
             {
@@ -88,14 +70,6 @@ namespace MineSweeper
             {
                 Image = question_mark;
             }
-        }
-
-        public void initialize()
-        {
-            Name = "Grid" + row.ToString() + "_" + col.ToString();
-            FlatStyle = FlatStyle.Flat;
-            Location = new Point(0, 0);
-            Size = new Size(27, 27);
         }
 
         public void focus()
@@ -134,7 +108,7 @@ namespace MineSweeper
         {
             if (state == State.Concealed)
             {
-                Image = empty;
+                Image = blank;
             }
             else if (state == State.Marked)
             {
@@ -150,13 +124,15 @@ namespace MineSweeper
         {
             if (state == State.Concealed || state == State.Undetermined)
             {
-                if (value == 9)
+                if (type == Type.Mine)
                 {
-                    value = 10;
+                    Image = mine_red;
+                    state = State.Revealed;
+                    return true;
                 }
-                Image = Pattern[value];
-                state = State.Exposed;
-                return value > 8;
+                Image = Pattern[type];
+                state = State.Revealed;
+                return false;
             }
             if (state == State.Marked)
             {
@@ -165,10 +141,18 @@ namespace MineSweeper
             return false;
         }
 
-        public void show()
+        public void expose()
         {
-            Image = Pattern[value];
-            state = State.Exposed;
+            if (type == Type.Mine && (state == State.Concealed || state == State.Undetermined))
+            {
+                Image = mine;
+                state = State.Revealed;
+            }
+            else if (type != Type.Mine && state == State.Marked)
+            {
+                Image = false_marked;
+                state = State.Revealed;
+            }
         }
 
         public void transform()
@@ -177,13 +161,13 @@ namespace MineSweeper
             {
                 Image = marked_mouseover;
                 state = State.Marked;
-                ((Plane)Parent).mine_status_update(-1);
+                ((Game)Parent).mine_status_update(-1);
             }
             else if (state == State.Marked)
             {
                 Image = question_mark_mouseover;
                 state = State.Undetermined;
-                ((Plane)Parent).mine_status_update(1);
+                ((Game)Parent).mine_status_update(1);
             }
             else if (state == State.Undetermined)
             {

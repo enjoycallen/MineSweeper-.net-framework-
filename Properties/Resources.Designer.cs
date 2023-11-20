@@ -141,11 +141,21 @@ namespace MineSweeper.Properties {
         }
         
         /// <summary>
-        ///   查找类似 data.dat 的本地化字符串。
+        ///   查找类似 archive.dat 的本地化字符串。
         /// </summary>
-        public static string Archive {
+        public static string ArchiveFile {
             get {
-                return ResourceManager.GetString("Archive", resourceCulture);
+                return ResourceManager.GetString("ArchiveFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap blank {
+            get {
+                object obj = ResourceManager.GetObject("blank", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -175,16 +185,6 @@ namespace MineSweeper.Properties {
         public static System.Drawing.Bitmap concealed_mouseover {
             get {
                 object obj = ResourceManager.GetObject("concealed_mouseover", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
-        /// </summary>
-        public static System.Drawing.Bitmap empty {
-            get {
-                object obj = ResourceManager.GetObject("empty", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

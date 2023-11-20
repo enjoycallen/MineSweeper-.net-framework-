@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.mine_textBox = new System.Windows.Forms.TextBox();
+            this.mine_count_textBox = new System.Windows.Forms.TextBox();
             this.width_textBox = new System.Windows.Forms.TextBox();
             this.height_textBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.user_defined_radioButton = new System.Windows.Forms.RadioButton();
+            this.player_defined_radioButton = new System.Windows.Forms.RadioButton();
             this.advanced_radioButton = new System.Windows.Forms.RadioButton();
             this.intermediate_radioButton = new System.Windows.Forms.RadioButton();
             this.basic_radioButton = new System.Windows.Forms.RadioButton();
@@ -46,13 +46,13 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.mine_textBox);
+            this.groupBox1.Controls.Add(this.mine_count_textBox);
             this.groupBox1.Controls.Add(this.width_textBox);
             this.groupBox1.Controls.Add(this.height_textBox);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.user_defined_radioButton);
+            this.groupBox1.Controls.Add(this.player_defined_radioButton);
             this.groupBox1.Controls.Add(this.advanced_radioButton);
             this.groupBox1.Controls.Add(this.intermediate_radioButton);
             this.groupBox1.Controls.Add(this.basic_radioButton);
@@ -63,15 +63,15 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "难度";
             // 
-            // mine_textBox
+            // mine_count_textBox
             // 
-            this.mine_textBox.Enabled = false;
-            this.mine_textBox.Location = new System.Drawing.Point(288, 143);
-            this.mine_textBox.MaxLength = 3;
-            this.mine_textBox.Name = "mine_textBox";
-            this.mine_textBox.Size = new System.Drawing.Size(69, 21);
-            this.mine_textBox.TabIndex = 10;
-            this.mine_textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_KeyPress);
+            this.mine_count_textBox.Enabled = false;
+            this.mine_count_textBox.Location = new System.Drawing.Point(288, 143);
+            this.mine_count_textBox.MaxLength = 3;
+            this.mine_count_textBox.Name = "mine_count_textBox";
+            this.mine_count_textBox.Size = new System.Drawing.Size(69, 21);
+            this.mine_count_textBox.TabIndex = 10;
+            this.mine_count_textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_KeyPress);
             // 
             // width_textBox
             // 
@@ -122,15 +122,15 @@
             // 
             // user_defined_radioButton
             // 
-            this.user_defined_radioButton.AutoSize = true;
-            this.user_defined_radioButton.Location = new System.Drawing.Point(184, 35);
-            this.user_defined_radioButton.Name = "user_defined_radioButton";
-            this.user_defined_radioButton.Size = new System.Drawing.Size(77, 16);
-            this.user_defined_radioButton.TabIndex = 4;
-            this.user_defined_radioButton.TabStop = true;
-            this.user_defined_radioButton.Text = "自定义(&U)";
-            this.user_defined_radioButton.UseVisualStyleBackColor = true;
-            this.user_defined_radioButton.CheckedChanged += new System.EventHandler(this.user_defined_radioButton_CheckedChanged);
+            this.player_defined_radioButton.AutoSize = true;
+            this.player_defined_radioButton.Location = new System.Drawing.Point(184, 35);
+            this.player_defined_radioButton.Name = "user_defined_radioButton";
+            this.player_defined_radioButton.Size = new System.Drawing.Size(77, 16);
+            this.player_defined_radioButton.TabIndex = 4;
+            this.player_defined_radioButton.TabStop = true;
+            this.player_defined_radioButton.Text = "自定义(&U)";
+            this.player_defined_radioButton.UseVisualStyleBackColor = true;
+            this.player_defined_radioButton.CheckedChanged += new System.EventHandler(this.user_defined_radioButton_CheckedChanged);
             // 
             // advanced_radioButton
             // 
@@ -142,7 +142,6 @@
             this.advanced_radioButton.TabStop = true;
             this.advanced_radioButton.Text = "高级(&V)\r\n99个雷\r\n16×30平铺网格";
             this.advanced_radioButton.UseVisualStyleBackColor = true;
-            this.advanced_radioButton.CheckedChanged += new System.EventHandler(this.advanced_radioButton_CheckedChanged);
             // 
             // intermediate_radioButton
             // 
@@ -154,7 +153,6 @@
             this.intermediate_radioButton.TabStop = true;
             this.intermediate_radioButton.Text = "中级(&I)\r\n40个雷\r\n16×16平铺网格";
             this.intermediate_radioButton.UseVisualStyleBackColor = true;
-            this.intermediate_radioButton.CheckedChanged += new System.EventHandler(this.intermediate_radioButton_CheckedChanged);
             // 
             // basic_radioButton
             // 
@@ -166,7 +164,6 @@
             this.basic_radioButton.TabStop = true;
             this.basic_radioButton.Text = "初级(&B)\r\n10个雷\r\n9×9平铺网格";
             this.basic_radioButton.UseVisualStyleBackColor = true;
-            this.basic_radioButton.CheckedChanged += new System.EventHandler(this.basic_radioButton_CheckedChanged);
             // 
             // confirm_button
             // 
@@ -217,8 +214,8 @@
         private System.Windows.Forms.RadioButton advanced_radioButton;
         private System.Windows.Forms.RadioButton intermediate_radioButton;
         private System.Windows.Forms.RadioButton basic_radioButton;
-        private System.Windows.Forms.RadioButton user_defined_radioButton;
-        private System.Windows.Forms.TextBox mine_textBox;
+        private System.Windows.Forms.RadioButton player_defined_radioButton;
+        private System.Windows.Forms.TextBox mine_count_textBox;
         private System.Windows.Forms.TextBox width_textBox;
         private System.Windows.Forms.TextBox height_textBox;
         private System.Windows.Forms.Label label3;

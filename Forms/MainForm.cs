@@ -2,14 +2,15 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace MineSweeper
 {
     public partial class MainForm : Form
     {
-        public int row, col, mine;
-        public Plane plane;
+        public Setting setting;
+        public Game game;
 
         public MainForm()
         {
@@ -18,20 +19,18 @@ namespace MineSweeper
 
         public void NewGame()
         {
-            if(plane != null)
+            if(game != null)
             {
-                plane.Dispose();
+                game.terminate();
             }
-            plane = new Plane(row, col, mine);
-            Size = plane.Size + new Size(100, 100);
-            plane.Name = "plane1";
-            plane.Location = new Point(40, 50);
-            Controls.Add(plane);
+            game = new Game(setting);
+            Size = game.Size + new Size(100, 100);
+            Controls.Add(game);
         }
 
         public void win()
         {
-            using (var windialog = new WinDialog(plane.time))
+            using (var windialog = new WinDialog(game.time))
             {
                 if (windialog.ShowDialog() == DialogResult.Cancel)
                 {
@@ -43,7 +42,7 @@ namespace MineSweeper
 
         public void lose()
         {
-            using (var losedialog = new LoseDialog(plane.time))
+            using (var losedialog = new LoseDialog(game.time))
             {
                 if (losedialog.ShowDialog() == DialogResult.Cancel)
                 {
@@ -84,25 +83,51 @@ namespace MineSweeper
             }
         }
 
+        private void LoadGame()
+        {
+            using (Reader reader = new Reader())
+            {
+                for (int i = 0; i < 3; ++i)
+                {
+                    reader.ReadRanking();
+                }
+                game = reader.ReadGame();
+                setting = game.setting;
+            }
+            
+            game.Disposed += Terminate;
+            Size = game.Size + new Size(100, 100);
+            Controls.Add(game);
+        }
+
+        private void Terminate(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         private void MainForm_Load(object sender, EventArgs e)
         {
-            row = col = 9;
-            mine = 10;
-            新游戏NToolStripMenuItem_Click(sender, e);
+            if (File.Exists(Properties.Resources.ArchiveFile))
+            {
+                LoadGame();
+            }
+            else
+            {
+                setting = new Setting(Setting.Level.Basic, new Shape(9, 9), 10);
+                NewGame();
+            }
         }
 
         private void 选项OToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (var option = new OptionDialog())
+            using (var option = new OptionDialog(setting))
             {
                 if (option.ShowDialog() == DialogResult.OK)
                 {
-                    row = option.row;
-                    col = option.col;
-                    mine = option.mine;
+                    setting = option.setting;
+                    NewGame();
                 }
             }
-            新游戏NToolStripMenuItem_Click(sender, e);
         }
     }
 }

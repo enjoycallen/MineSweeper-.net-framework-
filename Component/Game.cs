@@ -11,30 +11,32 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace MineSweeper
 {
-    public class Plane : Control
+    public partial class Game : Control
     {
-        public bool started;
-        public int row, col, mine;
-        public Grid[,] plane;
-        public Grid focus_grid;
-        public MouseButtons mouse_state = MouseButtons.None;
-        public PictureBox clock_pictureBox, mine_pictureBox;
-        public Label clock_status, mine_status;
-        public Timer timer;
-        public int time;
-
-        public void initialize(int r, int c)
+        public void generate_plane()
         {
-            row = r;
-            col = c;
-            SuspendLayout();
-            Size = new Size(col * 26 + 1, row * 26 + 50);
-            plane = new Grid[row, col];
-            for (int i = 0; i < row; ++i)
+            plane = new Grid[setting.shape.row, setting.shape.col];
+            for(int i=0;i< setting.shape.row; ++i)
             {
-                for (int j = 0; j < col; ++j)
+                for(int j=0;j< setting.shape.col; ++j)
                 {
-                    var g = plane[i, j] = new Grid(i, j);
+                    plane[i, j] = new Grid(new Position(i, j));
+                }
+            }
+        }
+
+        public void initialize()
+        {
+            SuspendLayout();
+
+            Size = new Size(setting.shape.col * 26 + 1, setting.shape.row * 26 + 50);
+            Location = new Point(40, 50);
+
+            for (int i = 0; i < setting.shape.row; ++i)
+            {
+                for (int j = 0; j < setting.shape.col; ++j)
+                {
+                    var g = plane[i, j];
                     g.Location = new Point(26 * j, 26 * i);
                     g.MouseEnter += Plane_MouseEnter;
                     g.MouseLeave += Plane_MouseLeave;
@@ -45,7 +47,6 @@ namespace MineSweeper
                 }
             }
 
-            time = 0;
             timer = new Timer();
             timer.Interval = 1000;
             timer.Tick += clock_status_update;
@@ -53,34 +54,43 @@ namespace MineSweeper
             clock_pictureBox = new PictureBox();
             clock_pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
             clock_pictureBox.Image = Properties.Resources.clock_status;
-            clock_pictureBox.Location = new Point(0, row * 26 + 10);
+            clock_pictureBox.Location = new Point(0, setting.shape.row * 26 + 10);
             Controls.Add(clock_pictureBox);
 
             mine_pictureBox = new PictureBox();
             mine_pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
             mine_pictureBox.Image = Properties.Resources.mine_status;
-            mine_pictureBox.Location = new Point(26 * col - 37, row * 26 + 10);
+            mine_pictureBox.Location = new Point(26 * setting.shape.col - 37, setting.shape.row * 26 + 10);
             Controls.Add(mine_pictureBox);
 
             clock_status = new Label();
             clock_status.Size = new Size(60, 30);
-            clock_status.Location = new Point(40, row * 26 + 13);
+            clock_status.Location = new Point(40, setting.shape.row * 26 + 13);
             clock_status.BackColor = Color.FromArgb(48, 85, 155);
             clock_status.ForeColor = Color.White;
-            clock_status.Text = "0";
+            clock_status.Text = time <= 999 ? time.ToString() : "999";
             clock_status.Font = new Font("Arial", 18);
             clock_status.TextAlign = ContentAlignment.MiddleCenter;
             Controls.Add(clock_status);
 
             mine_status = new Label();
             mine_status.Size = new Size(60, 30);
-            mine_status.Location = new Point(26 * col - 100, row * 26 + 13);
+            mine_status.Location = new Point(26 * setting.shape.col - 100, setting.shape.row * 26 + 13);
             mine_status.BackColor = Color.FromArgb(48, 85, 155);
             mine_status.ForeColor = Color.White;
-            mine_status.Text = mine.ToString();
+            int marked = 0;
+            foreach (var grid in plane)
+            {
+                if (grid.state == Grid.State.Marked)
+                {
+                    ++marked;
+                }
+            }
+            mine_status.Text = (setting.mine_count - marked).ToString();
             mine_status.Font = new Font("Arial", 18);
             mine_status.TextAlign = ContentAlignment.MiddleCenter;
             Controls.Add(mine_status);
+
             ResumeLayout();
         }
 
@@ -103,27 +113,34 @@ namespace MineSweeper
         
         public void generate_mine()
         {
-            var blank = Algorithm.MatrixNeightbour(plane, focus_grid.row, focus_grid.col);
+            var blank = Algorithm.MatrixNeightbour(plane, focus_grid.position);
             blank.Add(focus_grid);
-            int[] a = new int[row * col - blank.Count];
+            int[] a = new int[setting.shape.row * setting.shape.col - blank.Count];
             for (int i = 0; i < a.Length; ++i)
             {
-                a[i] = i < mine ? 1 : 0;
+                a[i] = i < setting.mine_count ? 1 : 0;
             }
             Algorithm.RandomShuffle(a);
-            int[,] map = new int[row, col];
-            for (int i = 0, cur = 0; i < row; ++i)
+            int[,] map = new int[setting.shape.row, setting.shape.col];
+            for (int i = 0, cur = 0; i < setting.shape.row; ++i)
             {
-                for(int j = 0; j < col; ++j)
+                for(int j = 0; j < setting.shape.col; ++j)
                 {
                     map[i, j] = blank.Find(x => x == plane[i, j]) == null ? a[cur++] : 0;
                 }
             }
-            for (int i = 0; i < row; ++i)
+            for (int i = 0; i < setting.shape.row; ++i)
             {
-                for (int j = 0; j < col; ++j)
+                for (int j = 0; j < setting.shape.col; ++j)
                 {
-                    plane[i, j].value = map[i, j] == 1 ? 9 : Algorithm.MatrixNeightbour(map, i, j).Sum();
+                    if (map[i, j] == 0)
+                    {
+                        plane[i, j].type = (Grid.Type)Algorithm.MatrixNeightbour(map, new Position(i, j)).Sum();
+                    }
+                    else
+                    {
+                        plane[i, j].type = Grid.Type.Mine;
+                    }
                 }
             }
         }
@@ -135,16 +152,32 @@ namespace MineSweeper
             timer.Start();
         }
 
-        public Plane(int r, int c,int m)
+        public void terminate()
         {
+            Dispose();
+        }
+
+        public Game(Setting setting)
+        {
+            this.setting = setting;
+            generate_plane();
             started = false;
-            mine = m;
-            initialize(r, c);
+            time = 0;
+            initialize();
+        }
+
+        public Game(Setting setting, Grid[,] plane, bool started, int time)
+        {
+            this.setting = setting;
+            this.plane = plane;
+            this.started = started;
+            this.time = time;
+            initialize();
         }
 
         public List<Grid> neighbour(Grid grid)
         {
-            return Algorithm.MatrixNeightbour(plane, grid.row, grid.col);
+            return Algorithm.MatrixNeightbour(plane, grid.position);
         }
 
         public void focus()
@@ -156,10 +189,7 @@ namespace MineSweeper
             if (mouse_state.HasFlag(MouseButtons.Left) && mouse_state.HasFlag(MouseButtons.Right))
             {
                 focus_grid.press();
-                foreach (var grid in neighbour(focus_grid))
-                {
-                    grid.press();
-                }
+                neighbour(focus_grid).ForEach(x => x.press());
             }
             else if (mouse_state.HasFlag(MouseButtons.Left))
             {
@@ -184,10 +214,7 @@ namespace MineSweeper
             if (mouse_state.HasFlag(MouseButtons.Left) && mouse_state.HasFlag(MouseButtons.Right))
             {
                 focus_grid.lostfocus();
-                foreach (var grid in neighbour(focus_grid))
-                {
-                    grid.lostfocus();
-                }
+                neighbour(focus_grid).ForEach(x => x.lostfocus());
             }
             else if (mouse_state.HasFlag(MouseButtons.Left))
             {
@@ -212,30 +239,22 @@ namespace MineSweeper
             lostfocus();
             if (mouse_state.HasFlag(MouseButtons.Left) && mouse_state.HasFlag(MouseButtons.Right))
             {
-                if (focus_grid.state != Grid.State.Exposed)
+                if (focus_grid.state != Grid.State.Revealed)
                 {
                     return false;
                 }
-                int marked = 0;
-                foreach (var grid in neighbour(focus_grid))
-                {
-                    if (grid.state == Grid.State.Marked)
-                    {
-                        ++marked;
-                    }
-                }
-                if (marked != focus_grid.value)
+                var neighbour = this.neighbour(focus_grid);
+                if (neighbour.Where(x => x.state == Grid.State.Marked).Count() != (int)focus_grid.type) 
                 {
                     return false;
                 }
-                foreach (var grid in neighbour(focus_grid))
+                foreach (var grid in neighbour)
                 {
                     if (floodfill(grid))
                     {
                         return true;
                     }
                 }
-
             }
             else if (mouse_state.HasFlag(MouseButtons.Left))
             {
@@ -254,7 +273,7 @@ namespace MineSweeper
 
         public bool floodfill(Grid grid)
         {
-            if (grid.state == Grid.State.Exposed || grid.state == Grid.State.Marked)
+            if (grid.state == Grid.State.Revealed || grid.state == Grid.State.Marked)
             {
                 return false;
             }
@@ -262,13 +281,13 @@ namespace MineSweeper
             {
                 return true;
             }
-            if (grid.value > 0)
+            if (grid.type != Grid.Type.Zero)
             {
                 return false;
             }
-            foreach (var g in neighbour(grid))
+            foreach (var x in neighbour(grid))
             {
-                if (g.state != Grid.State.Exposed && floodfill(g))
+                if (x.state != Grid.State.Revealed && floodfill(x))
                 {
                     return true;
                 }
@@ -280,7 +299,7 @@ namespace MineSweeper
         {
             foreach (var grid in plane)
             {
-                if (grid.value <= 8 && grid.state != Grid.State.Exposed)
+                if (grid.type != Grid.Type.Mine && grid.state != Grid.State.Revealed)
                 {
                     return false;
                 }
@@ -288,19 +307,11 @@ namespace MineSweeper
             return true;
         }
 
-        public void show_all_mine()
+        public void expose()
         {
             foreach (var grid in plane)
             {
-                if (grid.value < 9 && grid.state == Grid.State.Marked)
-                {
-                    grid.value = 11;
-                    grid.show();
-                }
-                if (grid.value == 9 && grid.state != Grid.State.Marked)
-                {
-                    grid.show();
-                }
+                grid.expose();
             }
         }
 
@@ -311,7 +322,7 @@ namespace MineSweeper
             {
                 bgm.Play();
             }
-            show_all_mine();
+            expose();
             ((MainForm)Parent).lose();
         }
 
@@ -323,7 +334,7 @@ namespace MineSweeper
             {
                 bgm.Play();
             }
-            show_all_mine();
+            expose();
             ((MainForm)Parent).win();
         }
 
@@ -368,8 +379,8 @@ namespace MineSweeper
             }
             else
             {
-                int x = (grid.row * 26 + e.Y) / 26, y = (grid.col * 26 + e.X) / 26;
-                if (x >= 0 && x < row && y >= 0 && y < col)
+                int x = (grid.position.row * 26 + e.Y) / 26, y = (grid.position.col * 26 + e.X) / 26;
+                if (x >= 0 && x < setting.shape.row && y >= 0 && y < setting.shape.col)
                 {
                     focus_grid = plane[x, y];
                 }
