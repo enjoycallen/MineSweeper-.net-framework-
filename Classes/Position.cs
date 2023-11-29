@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MineSweeper
+﻿namespace MineSweeper
 {
     public class Position
     {
-        public int row, col;
+        public int row { get; set; }
+        public int col { get; set; }
 
         public Position() { }
 

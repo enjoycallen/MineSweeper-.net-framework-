@@ -141,11 +141,11 @@ namespace MineSweeper.Properties {
         }
         
         /// <summary>
-        ///   查找类似 archive.dat 的本地化字符串。
+        ///   查找类似 minesweeper.dat 的本地化字符串。
         /// </summary>
-        public static string ArchiveFile {
+        public static string Archive {
             get {
-                return ResourceManager.GetString("ArchiveFile", resourceCulture);
+                return ResourceManager.GetString("Archive", resourceCulture);
             }
         }
         

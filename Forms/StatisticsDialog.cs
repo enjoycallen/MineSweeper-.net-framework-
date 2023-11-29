@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MineSweeper.Dialogs
@@ -39,7 +32,7 @@ namespace MineSweeper.Dialogs
 
         private void StatisticsDialog_Load(object sender, EventArgs e)
         {
-            if (File.Exists(Properties.Resources.ArchiveFile))
+            if (File.Exists(Properties.Resources.Archive))
             {
                 using (Reader reader = new Reader())
                 {

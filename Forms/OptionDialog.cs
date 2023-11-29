@@ -15,7 +15,7 @@ namespace MineSweeper
             {
                 basic_radioButton.Checked = true;
             }
-            else if(setting.level == Setting.Level.Intermidiate)
+            else if (setting.level == Setting.Level.Intermidiate)
             {
                 intermediate_radioButton.Checked = true;
             }
@@ -28,7 +28,7 @@ namespace MineSweeper
                 player_defined_radioButton.Checked = true;
                 height_textBox.Text = setting.shape.row.ToString();
                 width_textBox.Text = setting.shape.col.ToString();
-                mine_count_textBox.Text = setting.mine_count.ToString();
+                mine_count_textBox.Text = setting.mineCount.ToString();
             }
         }
 

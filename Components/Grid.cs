@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Data;
+﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace MineSweeper
 {
-    public partial class Grid : Button
+    public class Grid : Button
     {
-        //静态构造函数
+        private static readonly Dictionary<Type, dynamic> Pattern;
+        private static readonly dynamic blank, concealed, concealedMouseover, marked, markedMouseover, questionMark, questionMarkMouseover, questionMarkMousedown, mine, mineRed, mineFalse;
+        
         static Grid()
         {
-            //初始化图案资源
             Pattern = new Dictionary<Type, dynamic>
             {
                 {Type.Zero,Properties.Resources.blank },
@@ -30,16 +26,42 @@ namespace MineSweeper
 
             blank = Properties.Resources.blank;
             concealed = Properties.Resources.concealed;
-            concealed_mouseover = Properties.Resources.concealed_mouseover;
+            concealedMouseover = Properties.Resources.concealed_mouseover;
             marked = Properties.Resources.marked;
-            marked_mouseover = Properties.Resources.marked_mouseover;
-            question_mark = Properties.Resources.question_mark;
-            question_mark_mouseover = Properties.Resources.question_mark_mouseover;
-            question_mark_mousedown = Properties.Resources.question_mark_mousedown;
+            markedMouseover = Properties.Resources.marked_mouseover;
+            questionMark = Properties.Resources.question_mark;
+            questionMarkMouseover = Properties.Resources.question_mark_mouseover;
+            questionMarkMousedown = Properties.Resources.question_mark_mousedown;
             mine = Properties.Resources.mine;
-            mine_red = Properties.Resources.mine_red;
-            false_marked = Properties.Resources.false_marked;
+            mineRed = Properties.Resources.mine_red;
+            mineFalse = Properties.Resources.false_marked;
         }
+
+        public enum Type
+        {
+            Zero = 0,
+            One = 1,
+            Two = 2,
+            Three = 3,
+            Four = 4,
+            Five = 5,
+            Six = 6,
+            Seven = 7,
+            Eight = 8,
+            Mine = 9
+        }
+
+        public enum State
+        {
+            Concealed = 1,
+            Revealed = 2,
+            Marked = 3,
+            Undetermined = 4
+        }
+
+        public Position position { get; }
+        public Type type { get; set; }
+        public State state { get; set; }
 
         public void initialize()
         {
@@ -68,27 +90,27 @@ namespace MineSweeper
             }
             else
             {
-                Image = question_mark;
+                Image = questionMark;
             }
         }
 
-        public void focus()
+        public new void Focus()
         {
             if (state == State.Concealed)
             {
-                Image = concealed_mouseover;
+                Image = concealedMouseover;
             }
             else if (state == State.Marked)
             {
-                Image = marked_mouseover;
+                Image = markedMouseover;
             }
             else if (state == State.Undetermined)
             {
-                Image = question_mark_mouseover;
+                Image = questionMarkMouseover;
             }
         }
 
-        public void lostfocus()
+        public new void LostFocus()
         {
             if (state == State.Concealed)
             {
@@ -100,11 +122,11 @@ namespace MineSweeper
             }
             else if (state == State.Undetermined)
             {
-                Image = question_mark;
+                Image = questionMark;
             }
         }
 
-        public void press()
+        public void Press()
         {
             if (state == State.Concealed)
             {
@@ -116,17 +138,17 @@ namespace MineSweeper
             }
             else if (state == State.Undetermined)
             {
-                Image = question_mark_mousedown;
+                Image = questionMarkMousedown;
             }
         }
 
-        public bool reveal()
+        public bool Reveal()
         {
             if (state == State.Concealed || state == State.Undetermined)
             {
                 if (type == Type.Mine)
                 {
-                    Image = mine_red;
+                    Image = mineRed;
                     state = State.Revealed;
                     return true;
                 }
@@ -141,7 +163,28 @@ namespace MineSweeper
             return false;
         }
 
-        public void expose()
+        public void Transform()
+        {
+            if (state == State.Concealed)
+            {
+                Image = markedMouseover;
+                state = State.Marked;
+                ((Game)Parent).mine_status_update(-1);
+            }
+            else if (state == State.Marked)
+            {
+                Image = questionMarkMouseover;
+                state = State.Undetermined;
+                ((Game)Parent).mine_status_update(1);
+            }
+            else if (state == State.Undetermined)
+            {
+                Image = concealedMouseover;
+                state = State.Concealed;
+            }
+        }
+
+        public void Expose()
         {
             if (type == Type.Mine && (state == State.Concealed || state == State.Undetermined))
             {
@@ -150,29 +193,8 @@ namespace MineSweeper
             }
             else if (type != Type.Mine && state == State.Marked)
             {
-                Image = false_marked;
+                Image = mineFalse;
                 state = State.Revealed;
-            }
-        }
-
-        public void transform()
-        {
-            if (state == State.Concealed)
-            {
-                Image = marked_mouseover;
-                state = State.Marked;
-                ((Game)Parent).mine_status_update(-1);
-            }
-            else if (state == State.Marked)
-            {
-                Image = question_mark_mouseover;
-                state = State.Undetermined;
-                ((Game)Parent).mine_status_update(1);
-            }
-            else if (state == State.Undetermined)
-            {
-                Image = concealed_mouseover;
-                state = State.Concealed;
             }
         }
     }

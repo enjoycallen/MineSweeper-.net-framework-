@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ArchiveFile" xml:space="preserve">
-    <value>archive.dat</value>
+  <data name="Archive" xml:space="preserve">
+    <value>minesweeper.dat</value>
     <comment>存档文件</comment>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
@@ -139,7 +139,7 @@
   </data>
   <data name="HelpPage" xml:space="preserve">
     <value>https://zhuanlan.zhihu.com/p/633777736</value>
-    <comment>帮助网页</comment>
+    <comment>帮助页</comment>
   </data>
   <data name="lose_bgm" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\explode.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

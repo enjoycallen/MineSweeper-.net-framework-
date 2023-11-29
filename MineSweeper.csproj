@@ -49,45 +49,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Grid.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Data\Game.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Data\Position.cs" />
-    <Compile Include="Data\Ranking.cs" />
-    <Compile Include="Data\Record.cs" />
-    <Compile Include="Data\Setting.cs" />
-    <Compile Include="Data\Reader.cs" />
-    <Compile Include="Data\Shape.cs" />
-    <Compile Include="Data\Writer.cs" />
+    <Compile Include="Classes\Archive.cs" />
+    <Compile Include="Classes\Position.cs" />
+    <Compile Include="Classes\Ranking.cs" />
+    <Compile Include="Classes\Record.cs" />
+    <Compile Include="Classes\Setting.cs" />
+    <Compile Include="Classes\Reader.cs" />
+    <Compile Include="Classes\Shape.cs" />
+    <Compile Include="Classes\Writer.cs" />
     <Compile Include="Forms\AboutDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\AboutDialog.Designer.cs">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Algorithm.cs" />
-    <Compile Include="Forms\LoseDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\LoseDialog.Designer.cs">
-      <DependentUpon>LoseDialog.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Classes\Algorithm.cs" />
     <Compile Include="Forms\StatisticsDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\StatisticsDialog.Designer.cs">
       <DependentUpon>StatisticsDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\WinDialog.cs">
+    <Compile Include="Forms\ResultDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\WinDialog.Designer.cs">
-      <DependentUpon>WinDialog.cs</DependentUpon>
+    <Compile Include="Forms\ResultDialog.Designer.cs">
+      <DependentUpon>ResultDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Component\Grid.cs">
+    <Compile Include="Components\Grid.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\MainForm.cs">
@@ -102,7 +91,7 @@
     <Compile Include="Forms\OptionDialog.Designer.cs">
       <DependentUpon>OptionDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Component\Game.cs">
+    <Compile Include="Components\Game.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Program.cs" />
@@ -110,14 +99,11 @@
     <EmbeddedResource Include="Forms\AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\LoseDialog.resx">
-      <DependentUpon>LoseDialog.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\StatisticsDialog.resx">
       <DependentUpon>StatisticsDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\WinDialog.resx">
-      <DependentUpon>WinDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ResultDialog.resx">
+      <DependentUpon>ResultDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -131,6 +117,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include=".editorconfig" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

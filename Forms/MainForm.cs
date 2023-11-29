@@ -2,54 +2,43 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 
 namespace MineSweeper
 {
     public partial class MainForm : Form
     {
-        public Setting setting;
-        public Game game;
-
+        public Setting setting { get; set; }
+        public Game game { get; set; }
+        public Ranking basicRanking { get; set; }
+        public Ranking intermidiateRanking { get; set; }
+        public Ranking advancedRanking { get; set; }
+        
         public MainForm()
         {
             InitializeComponent();
         }
-
-        public void NewGame()
+        private void LoadGame()
         {
-            if(game != null)
-            {
-                game.terminate();
-            }
-            game = new Game(setting);
             Size = game.Size + new Size(100, 100);
             Controls.Add(game);
         }
 
-        public void win()
+        private void MainForm_Load(object sender, EventArgs e)
         {
-            using (var windialog = new WinDialog(game.time))
-            {
-                if (windialog.ShowDialog() == DialogResult.Cancel)
-                {
-                    Close();
-                }
-            }
-            NewGame();
+            Archive.Load(this);
+            LoadGame();
         }
 
-        public void lose()
+
+        public void NewGame()
         {
-            using (var losedialog = new LoseDialog(game.time))
+            if (game != null)
             {
-                if (losedialog.ShowDialog() == DialogResult.Cancel)
-                {
-                    Close();
-                }
+                game.Dispose();
             }
-            NewGame();
+            game = new Game(setting);
+            LoadGame();
         }
 
         public void 新游戏NToolStripMenuItem_Click(object sender, EventArgs e)
@@ -80,41 +69,6 @@ namespace MineSweeper
             using (var statistics = new StatisticsDialog())
             {
                 statistics.ShowDialog();
-            }
-        }
-
-        private void LoadGame()
-        {
-            using (Reader reader = new Reader())
-            {
-                for (int i = 0; i < 3; ++i)
-                {
-                    reader.ReadRanking();
-                }
-                game = reader.ReadGame();
-                setting = game.setting;
-            }
-            
-            game.Disposed += Terminate;
-            Size = game.Size + new Size(100, 100);
-            Controls.Add(game);
-        }
-
-        private void Terminate(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            if (File.Exists(Properties.Resources.ArchiveFile))
-            {
-                LoadGame();
-            }
-            else
-            {
-                setting = new Setting(Setting.Level.Basic, new Shape(9, 9), 10);
-                NewGame();
             }
         }
 

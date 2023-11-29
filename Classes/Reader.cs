@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MineSweeper
 {
-    public class Reader:BinaryReader
+    public class Reader : BinaryReader
     {
-        public Reader() : base(new FileStream(Properties.Resources.ArchiveFile, FileMode.Open)) { }
+        public Reader() : base(new FileStream(Properties.Resources.Archive, FileMode.Open)) { }
 
         public Shape ReadShape()
         {
@@ -35,7 +32,7 @@ namespace MineSweeper
         {
             int count = ReadInt32();
             var records = new List<Record>();
-            for(int i=0;i<count; ++i)
+            for (int i = 0; i < count; ++i)
             {
                 records.Add(ReadRecord());
             }
@@ -59,8 +56,8 @@ namespace MineSweeper
                 }
             }
             bool started = ReadBoolean();
-            int time = ReadInt32();
-            return new Game(setting, plane, started, time);
+            int timing = ReadInt32();
+            return new Game(setting);
         }
     }
 }
