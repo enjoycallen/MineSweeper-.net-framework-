@@ -32,15 +32,7 @@ namespace MineSweeper.Dialogs
 
         private void StatisticsDialog_Load(object sender, EventArgs e)
         {
-            if (File.Exists(Properties.Resources.Archive))
-            {
-                using (Reader reader = new Reader())
-                {
-                    basic = reader.ReadRanking();
-                    intermidiate = reader.ReadRanking();
-                    advanced = reader.ReadRanking();
-                }
-            }
+
         }
     }
 }
